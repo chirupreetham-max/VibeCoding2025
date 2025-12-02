@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiru Vocab & Idiom Tester</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chiru Vocab & Idiom Tester</h1>
+            <div class="stats">
+                <span>✔ Correct: <strong id="correctCount">0</strong></span>
+                <span>✖ Incorrect: <strong id="incorrectCount">0</strong></span>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="meaning-practice">Meaning Practice</button>
+            <button class="tab-btn" data-tab="guess-word">Guess The Word</button>
+            <button class="tab-btn" data-tab="sentence-practice">Sentence Practice</button>
+            <button class="tab-btn" data-tab="manage-vocab">Manage Vocabulary</button>
+        </nav>
+
+        <!-- MODE 1: WORD → USER WRITES MEANING -->
+        <section id="meaning-practice" class="tab-content active">
+            <div class="card">
+                <h2>Write the Meaning</h2>
+                <div class="question-display">
+                    <p class="label">Word/Idiom:</p>
+                    <p class="word-display" id="meaningWord">Loading...</p>
+                </div>
+
+                <textarea id="meaningInput" placeholder="Type the meaning here..." rows="4"></textarea>
+
+                <div class="feedback" id="meaningFeedback"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="app.checkMeaning()">Check Answer</button>
+                    <button class="btn btn-secondary" onclick="app.nextMeaning()">Next Word</button>
+                </div>
+
+                <div class="progress">
+                    <p id="meaningProgress">Word 1 of 0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODE 2: MEANING → USER GUESSES WORD -->
+        <section id="guess-word" class="tab-content">
+            <div class="card">
+                <h2>Guess The Word/Idiom</h2>
+                <div class="question-display">
+                    <p class="label">Meaning:</p>
+                    <p class="meaning-display" id="guessMeaning">Loading...</p>
+                </div>
+
+                <input type="text" id="guessInput" placeholder="Type the word or idiom here..." />
+
+                <div class="feedback" id="guessFeedback"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="app.checkGuess()">Check Answer</button>
+                    <button class="btn btn-secondary" onclick="app.showGuessAnswer()">Show Answer</button>
+                    <button class="btn btn-secondary" onclick="app.nextGuess()">Next</button>
+                </div>
+
+                <div class="progress">
+                    <p id="guessProgress">Word 1 of 0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODE 3: SENTENCE WRITING PRACTICE -->
+        <section id="sentence-practice" class="tab-content">
+            <div class="card">
+                <h2>Write an Example Sentence</h2>
+                <div class="question-display">
+                    <p class="label">Use this word/idiom:</p>
+                    <p class="word-display" id="sentenceWord">Loading...</p>
+                </div>
+
+                <textarea id="sentenceInput" placeholder="Write a sentence using the word/idiom above..." rows="5"></textarea>
+
+                <div class="feedback" id="sentenceFeedback"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="app.checkSentence()">Check & Correct</button>
+                    <button class="btn btn-secondary" onclick="app.nextSentence()">Next Word</button>
+                </div>
+
+                <div class="progress">
+                    <p id="sentenceProgress">Word 1 of 0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODE 4: MANAGE VOCABULARY -->
+        <section id="manage-vocab" class="tab-content">
+            <div class="card">
+                <h2>Manage Vocabulary & Idioms</h2>
+
+                <!-- Add/Edit Form -->
+                <div class="form-section">
+                    <h3>Add New or Edit</h3>
+                    <form id="vocabForm" onsubmit="app.saveVocab(event)">
+                        <div class="form-group">
+                            <label for="formWord">Word/Idiom:</label>
+                            <input type="text" id="formWord" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formType">Type:</label>
+                            <select id="formType" required>
+                                <option value="vocabulary">Vocabulary</option>
+                                <option value="idiom">Idiom</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formMeaning">Meaning:</label>
+                            <textarea id="formMeaning" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formExample">Example (Optional):</label>
+                            <textarea id="formExample" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" onclick="app.clearForm()">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Filter -->
+                <div class="filter-section">
+                    <h3>Filter by Type</h3>
+                    <div class="button-group">
+                        <button class="filter-btn active" onclick="app.filterVocab('all')">All</button>
+                        <button class="filter-btn" onclick="app.filterVocab('vocabulary')">Vocabulary</button>
+                        <button class="filter-btn" onclick="app.filterVocab('idiom')">Idioms</button>
+                    </div>
+                </div>
+
+                <!-- Vocabulary List -->
+                <div class="vocab-list-section">
+                    <h3>Vocabulary List (<span id="vocabCount">0</span>)</h3>
+                    <div id="vocabList" class="vocab-list">
+                        <p>No items yet. Add one above!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
