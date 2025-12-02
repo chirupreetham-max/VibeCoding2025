@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="Tables_Quiz_from_2-11.css">
+</head>
+<body class="bg-indigo-100 min-h-screen flex items-center justify-center p-4 font-sans select-none">
+
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-indigo-200">
+        
+        <!-- Operation Selector -->
+        <div class="bg-white px-6 pt-6 pb-3 flex gap-2 justify-center">
+            <button id="op-add" class="op-btn px-4 py-2 rounded-lg font-bold text-white bg-blue-500 hover:bg-blue-600 transition-all active">+</button>
+            <button id="op-sub" class="op-btn px-4 py-2 rounded-lg font-bold text-white bg-gray-400 hover:bg-gray-500 transition-all">−</button>
+            <button id="op-mul" class="op-btn px-4 py-2 rounded-lg font-bold text-white bg-gray-400 hover:bg-gray-500 transition-all">×</button>
+            <button id="op-div" class="op-btn px-4 py-2 rounded-lg font-bold text-white bg-gray-400 hover:bg-gray-500 transition-all">÷</button>
+        </div>
+
+        <!-- Header / Scoreboard -->
+        <div class="bg-indigo-600 p-6 flex justify-between items-center text-white">
+            <div class="flex flex-col items-center w-1/2 border-r border-indigo-500">
+                <span class="text-sm font-bold uppercase tracking-wider opacity-80">Correct</span>
+                <span id="score-correct" class="text-4xl font-black">0</span>
+            </div>
+            <div class="flex flex-col items-center w-1/2">
+                <span class="text-sm font-bold uppercase tracking-wider opacity-80">Incorrect</span>
+                <span id="score-incorrect" class="text-4xl font-black">0</span>
+            </div>
+        </div>
+
+        <!-- Game Area -->
+        <div class="p-8 flex flex-col items-center space-y-8">
+            
+            <!-- The Question -->
+            <div id="question-container" class="flex items-center justify-center space-x-4 text-6xl md:text-7xl font-black text-gray-800">
+                <span id="factor-a">?</span>
+                <span id="operator-display" class="text-indigo-500">?</span>
+                <span id="factor-b">?</span>
+            </div>
+
+            <!-- Feedback Message (Hidden by default) -->
+            <div id="feedback" class="h-16 flex items-center justify-center w-full">
+                <p class="text-2xl font-bold text-center hidden"></p>
+            </div>
+
+            <!-- Input Section -->
+            <div class="w-full relative">
+                <input type="number" id="answer-input" 
+                    class="w-full text-center text-5xl font-bold p-6 border-4 border-gray-300 rounded-2xl focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all text-gray-800 placeholder-gray-200" 
+                    placeholder="?" autocomplete="off">
+            </div>
+
+            <!-- Action Button -->
+            <button id="action-btn" class="w-full py-5 rounded-2xl text-3xl font-black text-white shadow-lg transform active:scale-95 transition-all bg-indigo-500 hover:bg-indigo-600">
+                CHECK
+            </button>
+
+            <!-- Reset Game Link -->
+            <button onclick="resetScore()" class="text-gray-400 font-semibold hover:text-indigo-500 underline text-sm">
+                Reset Score
+            </button>
+            
+            <!-- History Log -->
+            <div id="history-log" class="w-full mt-6 pt-4 border-t border-gray-200 space-y-2">
+                <h3 class="text-lg font-bold text-gray-700">Past Attempts:</h3>
+                <!-- History items will be inserted here, newest first -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Canvas -->
+    <canvas id="confetti" class="fixed top-0 left-0 w-full h-full pointer-events-none z-50"></canvas>
+
+    <script src="Tables_Quiz_from_2-11.js"></script>
+</body>
+</html>

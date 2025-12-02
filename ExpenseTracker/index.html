@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!--
+      To use your photo as the subtle header background, place the image file
+      named `chiranjeevi.jpg` into this folder: `ExpenseTracker/`.
+      The CSS will pick it up automatically and apply a dim/blur overlay so
+      the text remains readable.
+    -->
+    <header class="header">
+      <div class="header-row">
+        <div>
+          <h1>Chiru Finance Tracker</h1>
+          <p class="muted subtitle-bold">Track expenses locally — Daily / Weekly / Monthly / Yearly summaries</p>
+        </div>
+        <div class="header-actions">
+          <button id="export-btn" class="btn">Download Data</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card form-card">
+        <h2>Add Expense</h2>
+        <form id="expense-form">
+          <label>Category</label>
+          <div class="row">
+            <select id="category-select" required></select>
+            <button type="button" id="add-category-btn" class="btn small">+ New</button>
+          </div>
+          <div id="new-category-row" class="row hidden">
+            <input id="new-category-input" placeholder="New category name" />
+            <button type="button" id="save-category-btn" class="btn small primary">Save</button>
+            <button type="button" id="cancel-category-btn" class="btn small">Cancel</button>
+          </div>
+
+          <label>Amount</label>
+          <input id="amount-input" type="number" step="0.01" min="0.01" placeholder="0.00" required />
+
+          <label>Date</label>
+          <input id="date-input" type="date" required />
+
+          <div class="actions">
+            <button type="submit" class="btn primary">Add Expense</button>
+            <button type="button" id="reset-btn" class="btn">Reset App</button>
+          </div>
+        </form>
+        <div id="form-msg" class="msg"></div>
+      </section>
+
+      <section class="card filters-card">
+        <h2>Filters & Range</h2>
+        <div class="ranges">
+          <label><input type="radio" name="range" value="daily" checked /> Daily</label>
+          <label><input type="radio" name="range" value="weekly" /> Weekly</label>
+          <label><input type="radio" name="range" value="monthly" /> Monthly</label>
+          <label><input type="radio" name="range" value="yearly" /> Yearly</label>
+        </div>
+
+        <div id="range-inputs" class="range-inputs">
+          <div id="daily-input" class="range-item">
+            <label>Select Date</label>
+            <input type="date" id="filter-date" />
+          </div>
+          <div id="weekly-input" class="range-item hidden">
+            <label>Select Week (pick any date in week)</label>
+            <input type="date" id="filter-week" />
+          </div>
+          <div id="monthly-input" class="range-item hidden">
+            <label>Select Month</label>
+            <input type="month" id="filter-month" />
+          </div>
+          <div id="yearly-input" class="range-item hidden">
+            <label>Select Year</label>
+            <input type="number" id="filter-year" min="1970" max="2099" />
+          </div>
+        </div>
+
+        <div class="summary small">
+          <div><strong>Overall Total:</strong> <span id="overall-total">₹0.00</span></div>
+        </div>
+      </section>
+
+      <!-- Image card: place a photo named `chiranjeevi.jpg` into the folder
+           `ExpenseTracker/` and it will be shown here, sized to fit exactly. -->
+      <section class="card image-card">
+        <div class="image-viewport">
+          <img id="user-photo" src="" alt="User photo" />
+        </div>
+        <div class="image-controls">
+          <input id="photo-input" type="file" accept="image/*" class="hidden" />
+          <button id="upload-photo-btn" class="btn small">Upload Photo</button>
+          <button id="remove-photo-btn" class="btn small">Remove Photo</button>
+          <div class="adjust-controls">
+            <label class="small">Zoom</label>
+            <input id="zoom-slider" type="range" min="0.3" max="3" step="0.01" value="1" />
+            <div style="display:flex;gap:6px;align-items:center;width:100%;justify-content:space-between">
+              <div style="display:flex;gap:6px;align-items:center">
+                <button id="fit-photo-btn" class="btn small">Fit</button>
+                <button id="cover-photo-btn" class="btn small">Cover</button>
+              </div>
+              <div class="small muted" id="zoom-label">100%</div>
+            </div>
+            <div class="align-buttons">
+              <button class="btn small align-btn" data-align="top-left">TL</button>
+              <button class="btn small align-btn" data-align="top-center">TC</button>
+              <button class="btn small align-btn" data-align="top-right">TR</button>
+              <button class="btn small align-btn" data-align="center-left">CL</button>
+              <button class="btn small align-btn" data-align="center">C</button>
+              <button class="btn small align-btn" data-align="center-right">CR</button>
+              <button class="btn small align-btn" data-align="bottom-left">BL</button>
+              <button class="btn small align-btn" data-align="bottom-center">BC</button>
+              <button class="btn small align-btn" data-align="bottom-right">BR</button>
+            </div>
+            <button id="reset-photo-pos" class="btn small">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card table-card">
+        <h2>Expenses</h2>
+        <div class="table-wrap">
+          <table id="expenses-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th class="align-right">Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card summary-card">
+        <h2>Summary by Category</h2>
+        <div class="summary-list" id="category-summary"></div>
+        <canvas id="category-chart" width="400" height="300"></canvas>
+      </section>
+    </main>
+
+    <footer class="footer muted">
+      <small>All data stored locally in your browser (localStorage).</small>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

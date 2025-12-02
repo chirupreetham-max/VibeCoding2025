@@ -1,0 +1,112 @@
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --muted:#677294;
+  --accent:#4f46e5;
+  --accent-2:#06b6d4;
+  --danger:#ef4444;
+  --success:#10b981;
+  --shadow: 0 6px 18px rgba(35,44,67,0.08);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#0f1724;font-family:Inter,system-ui;padding:24px}
+.container{max-width:1100px;margin:0 auto}
+.header{margin-bottom:18px}
+
+/* Header background using user's photo (place `chiranjeevi.jpg` in this folder).
+  The pseudo-element shows the photo with reduced opacity + blur so the
+  heading remains readable and the image does not dominate the text. */
+.header{margin-bottom:18px;position:relative;border-radius:10px;overflow:hidden;padding:22px 20px;background:linear-gradient(90deg,#f8fbff,#e9fbfb);color:#051025}
+.header-row{display:flex;justify-content:space-between;align-items:center}
+.header h1{margin:0;font-weight:800;color:#051025}
+.muted{color:rgba(5,16,37,0.85);margin-top:6px}
+.subtitle-bold{font-weight:700}
+.header-actions{display:flex;gap:8px;align-items:center}
+.header-actions .btn{padding:8px 12px;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.card{background:var(--card);padding:16px;border-radius:12px;box-shadow:var(--shadow)}
+.form-card{grid-column:span 4}
+.filters-card{grid-column:span 4}
+.table-card{grid-column:span 8}
+.summary-card{grid-column:span 4}
+
+@media (max-width:900px){
+  .form-card,.filters-card,.summary-card{grid-column:span 12}
+  .table-card{grid-column:span 12}
+}
+
+/* Image card placed top-right (fits exactly into the highlighted area).
+   Put the image file `chiranjeevi.jpg` into the ExpenseTracker folder. */
+.image-card{grid-column:9/span 4;grid-row:1;display:block;padding:12px;overflow:hidden;height:220px;position:relative}
+.image-viewport{position:relative;width:100%;height:100%;overflow:hidden;border-radius:8px;background:linear-gradient(180deg,#fff,#fafafa);}
+.image-viewport img{position:absolute;left:50%;top:50%;transform:translate(calc(-50% + 0px), calc(-50% + 0px)) scale(1);transform-origin:center center;transition:transform .12s ease;max-width:none}
+.image-viewport{cursor:grab}
+.image-viewport.grabbing{cursor:grabbing}
+.image-viewport img[src=""]{display:none}
+
+/* Controls hidden by default, appear on hover */
+.image-card .image-controls{position:absolute;top:10px;right:10px;z-index:6;display:flex;flex-direction:column;gap:8px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+.image-card:hover .image-controls{opacity:1;pointer-events:auto}
+.image-card .image-controls .btn{padding:6px 8px;border-radius:8px}
+.image-card .image-controls .btn.small{font-size:13px}
+.image-card .adjust-controls{background:rgba(255,255,255,0.96);padding:8px;border-radius:8px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.image-card .adjust-controls label{font-size:12px;color:var(--muted)}
+.image-card .adjust-controls input[type="range"]{width:140px}
+.image-card .adjust-controls #zoom-label{min-width:44px;text-align:right}
+.image-card .align-buttons{display:flex;flex-wrap:wrap;gap:6px}
+.image-card .align-btn{padding:4px 6px}
+
+@media (max-width:1100px){
+  .image-card{grid-column:span 12;height:160px}
+}
+
+@media (max-width:1100px){
+  /* move image below on medium screens */
+  .image-card{grid-column:span 12;height:160px}
+}
+
+label{display:block;margin-top:10px;color:var(--muted);font-size:13px}
+input[type="text"],input[type="number"],input[type="date"],select,input[type="month"],input[type="number"]{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;margin-top:6px;font-size:14px}
+.row{display:flex;gap:8px;align-items:center}
+.row input{flex:1}
+.btn{border:1px solid #d6dbe8;background:white;padding:8px 12px;border-radius:8px;cursor:pointer}
+.btn.small{padding:6px 8px;font-size:13px}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none}
+.actions{display:flex;gap:8px;margin-top:12px}
+.hidden{display:none}
+.msg{margin-top:10px;min-height:20px}
+.msg.success{color:var(--success)}
+.msg.error{color:var(--danger)}
+
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid #f1f3f7}
+.align-right{text-align:right}
+.small{font-size:14px;color:var(--muted)}
+.summary-list{margin-top:12px}
+.summary-item{display:flex;justify-content:space-between;padding:8px;border-radius:8px;background:#fbfbff;margin-bottom:8px}
+.footer{margin-top:18px;text-align:center}
+.muted small{color:var(--muted)}
+
+.card h2{margin:0 0 8px 0}
+
+.delete-btn{background:transparent;border:none;color:var(--danger);cursor:pointer}
+.category-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
+/* Toast */
+.toast{position:fixed;right:20px;bottom:20px;padding:12px 16px;border-radius:10px;color:white;box-shadow:var(--shadow);z-index:999}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+
+/* Responsive niceties */
+@media (max-width:600px){
+  .grid{gap:12px}
+  body{padding:12px}
+}
+
+/* Utility */
+.muted{color:var(--muted)}
+
+/* Instructions area small text */
+.instructions{font-size:12px;color:var(--muted);margin-top:8px}

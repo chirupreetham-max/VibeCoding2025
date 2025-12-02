@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kids Tables Trainer - Kirthan Reddy</title>
+    <link rel="stylesheet" href="Tables_Quiz.css">
+  </head>
+  <body>
+    <div class="app">
+      <!-- PAGE 1: WELCOME -->
+      <section id="p1" class="view active">
+        <h1 class="title">
+          Welcome to<br />
+          Kids Tables Trainer<br />
+          <span style="color: #a75b6c">KIRTHAN REDDY KAMASANI</span>
+        </h1>
+        <button id="start" class="btn">Start Practice 🚀</button>
+      </section>
+
+      <!-- PAGE 2: TABLE SELECT -->
+      <section id="p2" class="view">
+        <h2>Select your table</h2>
+        <select id="table" class="select"></select>
+        <br /><br />
+        <button id="go" class="btn">Go to Writing ✏️</button>
+      </section>
+
+      <!-- PAGE 3: QUIZ / WRITING -->
+      <section id="p3" class="view">
+        <button id="back" class="btn">⬅ Change table</button>
+        <h2 id="tableTitle"></h2>
+        <div id="quiz"></div>
+        <br />
+        <button id="check" class="btn">Check answers 🎉</button>
+        <h3 id="result"></h3>
+      </section>
+    </div>
+
+    <script src="Tables_Quiz.js"></script>
+  </body>
+</html>
